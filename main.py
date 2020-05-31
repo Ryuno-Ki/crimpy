@@ -12,6 +12,8 @@ from PySide2.QtWidgets import (
     QWidget
 )
 
+from crimpy.views import MainWindow
+
 
 @Slot()
 def log():
@@ -47,12 +49,16 @@ class Form(QDialog):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
 
+    window = MainWindow()
+    window.resize(800, 600)
+    window.show()
+
     # button = QPushButton("Click me")
     # button.clicked.connect(log)
     # button.show()
 
-    form = Form()
-    form.show()
+    # form = Form()
+    # form.show()
     
     # view = QQuickView()
     # url = QUrl("view.qml")

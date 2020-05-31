@@ -15,10 +15,6 @@ from PySide2.QtWidgets import (
 from crimpy.views import MainWindow
 
 
-@Slot()
-def log():
-    print("Button clicked")
-
 class MyWidget(QWidget):
     def __init__(self):
         QWidget.__init__(self)

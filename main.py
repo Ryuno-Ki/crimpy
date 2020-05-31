@@ -1,9 +1,13 @@
 import sys
 
-from PySide2.QtCore import Qt, QUrl
+from PySide2.QtCore import Slot, Qt, QUrl
 from PySide2.QtQuick import QQuickView
-from PySide2.QtWidgets import QApplication, QLabel, QWidget, QVBoxLayout
+from PySide2.QtWidgets import QApplication, QLabel, QPushButton, QVBoxLayout, QWidget
 
+
+@Slot()
+def log():
+    print("Button clicked")
 
 class MyWidget(QWidget):
     def __init__(self):
@@ -18,11 +22,16 @@ class MyWidget(QWidget):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    view = QQuickView()
-    url = QUrl("view.qml")
 
-    view.setSource(url)
-    view.show()
+    button = QPushButton("Click me")
+    button.clicked.connect(log)
+    button.show()
+    
+    # view = QQuickView()
+    # url = QUrl("view.qml")
+    # view.setSource(url)
+    # view.show()
+
     # widget = MyWidget()
     # widget.resize(800, 600)
     # widget.show()

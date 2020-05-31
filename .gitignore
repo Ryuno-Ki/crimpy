@@ -210,6 +210,7 @@ tags
 .vim
 
 ### VisualStudioCode ###
+.vscode
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json

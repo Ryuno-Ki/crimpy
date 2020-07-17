@@ -1,9 +1,10 @@
 import sys
 
 from PySide2.QtCore import Slot, Qt, QUrl
+from PySide2.QtGui import QGuiApplication
+from PySide2.QtQml import QQmlApplicationEngine, qmlRegisterType
 from PySide2.QtQuick import QQuickView
 from PySide2.QtWidgets import (
-    QApplication,
     QDialog,
     QLabel,
     QLineEdit,
@@ -12,7 +13,8 @@ from PySide2.QtWidgets import (
     QWidget
 )
 
-from crimpy.views import MainWindow
+from crimpy.models import TwitterModel
+from crimpy.views import MainObject
 
 
 class MyWidget(QWidget):
@@ -43,11 +45,20 @@ class Form(QDialog):
         print("Hello {}".format(self.edit.text()))
 
 if __name__ == "__main__":
-    app = QApplication(sys.argv)
+    major = 1
+    minor = 0
+    app = QGuiApplication(sys.argv)
+    engine = QQmlApplicationEngine()
+    main_object = MainObject()
+    engine.rootContext().setContextProperty("main", main_object)
+    qmlRegisterType(TwitterModel, 'Twitter', major, minor, 'TwitterModel')
+    engine.load(QUrl.fromLocalFile(MainObject.qml_file))
+    # view = QQuickView()
+    # view.setResizeMode(QQuickView.SizeRootObjectToView)
 
-    window = MainWindow()
-    window.resize(800, 600)
-    window.show()
+    # if view.status() == QQuickView.Error:
+    #     sys.exit(-1)
+    # view.show()
 
     # button = QPushButton("Click me")
     # button.clicked.connect(log)

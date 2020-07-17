@@ -1,58 +1,51 @@
-from PySide2.QtCore import Slot
-from PySide2.QtWidgets import (
-    QAction,
-    QApplication,
-    QMessageBox,
-    QMainWindow,
-    QPushButton,
-    QVBoxLayout
-)
+import os
+
+from PySide2.QtCore import Property, QObject, Signal, Slot
 
 from crimpy import __version__ as app_version
 
 
-class MainWindow(QMainWindow):
+class MainObject(QObject):
+    qml_file = os.path.abspath(
+        os.path.join(os.path.dirname(__file__), "main.qml")
+    )
+
     def __init__(self):
         super().__init__()
-        self.setWindowTitle(self._get_translation("window.title"))
-        self._build_menu()
+        # self._build_menu()
 
-    @Slot()
-    def exit_app(self, checked):
-        QApplication.quit()
+    def get_exit_label(self):
+        return self.__get_translation("action.exit")
 
-    @Slot()
-    def show_version(self):
-        version = QMessageBox()
-        version.setText("Version {}".format(app_version))
-        version.exec_()
+    def get_help_menu_label(self):
+        return self.__get_translation("menu.help")
 
-    def _build_menu(self):
-        self.menu = self.menuBar()
-        self._build_file_menu()
-        self._build_help_menu()
+    def get_version(self):
+        return "Version {}".format(app_version)
 
-    def _build_file_menu(self):
-        self.file_menu = self.menu.addMenu(self._get_translation("menu.file"))
-        self._build_exit_action()
+    exitLabelChanged = Signal(str)
+    helpMenuLabelChanged = Signal(str)
+    versionChanged = Signal(str)
 
-    def _build_help_menu(self):
-        self.help_menu = self.menu.addMenu(self._get_translation("menu.help"))
-        self._build_version_action()
+    exit_label = Property(
+        str,
+        get_exit_label,
+        notify=exitLabelChanged
+    )
 
-    def _build_exit_action(self):
-        exit_action = QAction(self._get_translation("action.exit"), self)
-        exit_action.setShortcut("Ctrl+Q")
-        exit_action.triggered.connect(self.exit_app)
-        self.file_menu.addAction(exit_action)
+    help_menu_label = Property(
+        str,
+        get_help_menu_label,
+        notify=helpMenuLabelChanged
+    )
 
-    def _build_version_action(self):
-        version_action = QAction(self._get_translation("action.version"), self)
-        version_action.setShortcut("?")
-        version_action.triggered.connect(self.show_version)
-        self.help_menu.addAction(version_action)
+    version = Property(
+        str,
+        get_version,
+        notify=versionChanged
+    )
 
-    def _get_translation(self, key):
+    def __get_translation(self, key):
         translations = {
             "action.exit": "Exit",
             "action.version": "Version",

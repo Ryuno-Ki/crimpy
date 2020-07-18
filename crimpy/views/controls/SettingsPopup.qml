@@ -1,7 +1,7 @@
 import QtQuick 2.12
 // Provides Popup
 import QtQuick.Controls 2.12
-// Provides StackLayout
+// Provides ColumnLayout and StackLayout
 import QtQuick.Layouts 1.15
 
 Popup {

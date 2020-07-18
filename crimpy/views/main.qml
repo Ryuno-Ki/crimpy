@@ -46,14 +46,14 @@ ApplicationWindow {
         id: twitterModel
     }
 
-    ListView {
+    Column {
         anchors.fill: parent
-        model: twitterModel
-        delegate: Item {
-            width: ListView.view.width
-            height: 30
-            Text {
-                text: display.tweet.full_text
+        Repeater {
+            model: twitterModel
+            delegate: Row {
+                Text {
+                    text: display.tweet.full_text
+                }
             }
         }
 	}

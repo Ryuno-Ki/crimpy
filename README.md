@@ -30,6 +30,15 @@ lrelease crimpy.pro
 
 This will compile all `*.ts` files into respective `*.qm` files.
 
+## Data sources
+
+Right now, this application expects you to use a Twitter takeout and place it
+within the resources directory (rename `twitter.js` to `twitter.json` and edit
+the first line to make it valid JSON).
+
+In a future version, the application will handle the unpacking of the takeout
+and modifying.
+
 ## License
 
 GPL v3 or newer. See [LICENSE](./LICENSE.txt).

@@ -28,13 +28,11 @@ class MainApplication(QGuiApplication):
 
     @Slot()
     def language_changed(self, language):
-        print('Language changed to {}'.format(language))
         if language == "de":
             translation_file_path = os.path.join(
                 self.translation_directory,
                 "crimpy_de.qm"
             )
-            print("Installing {}".format(translation_file_path))
             self.__de_translator.load(translation_file_path)
             self.installTranslator(self.__de_translator)
         else:

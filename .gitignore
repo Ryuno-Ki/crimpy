@@ -254,4 +254,6 @@ tags
 
 # End of https://www.toptal.com/developers/gitignore/api/qt,qtcreator,python,vim,visualstudiocode
 
+resources/
+!resources/.gitkeep
 .vscode/

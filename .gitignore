@@ -1,6 +1,6 @@
 
-# Created by https://www.gitignore.io/api/qt,vim,python,qtcreator,visualstudiocode
-# Edit at https://www.gitignore.io/?templates=qt,vim,python,qtcreator,visualstudiocode
+# Created by https://www.toptal.com/developers/gitignore/api/qt,qtcreator,python,vim,visualstudiocode
+# Edit at https://www.toptal.com/developers/gitignore?templates=qt,qtcreator,python,vim,visualstudiocode
 
 ### Python ###
 # Byte-compiled / optimized / DLL files
@@ -52,12 +52,23 @@ htmlcov/
 nosetests.xml
 coverage.xml
 *.cover
+*.py,cover
 .hypothesis/
 .pytest_cache/
 
 # Translations
 *.mo
 *.pot
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Flask stuff:
+instance/
+.webassets-cache
 
 # Scrapy stuff:
 .scrapy
@@ -67,6 +78,13 @@ docs/_build/
 
 # PyBuilder
 target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
 
 # pyenv
 .python-version
@@ -78,11 +96,24 @@ target/
 #   install all needed dependencies.
 #Pipfile.lock
 
-# celery beat schedule file
+# PEP 582; used by e.g. github.com/David-OConnor/pyflow
+__pypackages__/
+
+# Celery stuff
 celerybeat-schedule
+celerybeat.pid
 
 # SageMath parsed files
 *.sage.py
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
 
 # Spyder project settings
 .spyderproject
@@ -90,11 +121,6 @@ celerybeat-schedule
 
 # Rope project settings
 .ropeproject
-
-# Mr Developer
-.mr.developer.cfg
-.project
-.pydevproject
 
 # mkdocs documentation
 /site
@@ -107,6 +133,9 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
+# pytype static type analyzer
+.pytype/
+
 ### Qt ###
 # C++ objects and libs
 *.slo
@@ -115,6 +144,7 @@ dmypy.json
 *.a
 *.la
 *.lai
+*.so.*
 *.dll
 *.dylib
 
@@ -137,6 +167,8 @@ ui_*.h
 *.jsc
 Makefile*
 *build-*
+*.qm
+*.prl
 
 # Qt unit tests
 target_wrapper.*
@@ -151,7 +183,7 @@ target_wrapper.*
 # QtCreator CMake
 CMakeLists.txt.user*
 
-# QtCreator 4.8< compilation database
+# QtCreator 4.8< compilation database 
 compile_commands.json
 
 # QtCreator local machine specific files for imported projects
@@ -184,9 +216,13 @@ compile_commands.json
 
 # Qt Creator backups
 
+# Flags for Clang Code Model
+*.cxxflags
+*.cflags
 ### Vim ###
 # Swap
 [._]*.s[a-v][a-z]
+!*.svg  # comment out if you don't need vector files
 [._]*.sw[a-p]
 [._]s[a-rt-v][a-z]
 [._]ss[a-gi-z]
@@ -199,26 +235,23 @@ Sessionx.vim
 # Temporary
 .netrwhist
 *~
-
 # Auto-generated tag files
 tags
-
 # Persistent undo
 [._]*.un~
 
-# Coc configuration directory
-.vim
-
 ### VisualStudioCode ###
-.vscode
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+*.code-workspace
 
 ### VisualStudioCode Patch ###
 # Ignore all local history of files
 .history
 
-# End of https://www.gitignore.io/api/qt,vim,python,qtcreator,visualstudiocode
+# End of https://www.toptal.com/developers/gitignore/api/qt,qtcreator,python,vim,visualstudiocode
+
+.vscode/

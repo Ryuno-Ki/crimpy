@@ -1,6 +1,7 @@
+import os
 import sys
 
-from PySide2.QtCore import Slot, Qt, QUrl
+from PySide2.QtCore import Slot, QLocale, Qt, QTranslator, QUrl
 from PySide2.QtGui import QGuiApplication
 from PySide2.QtQml import QQmlApplicationEngine, qmlRegisterType
 from PySide2.QtQuick import QQuickView
@@ -14,66 +15,51 @@ from PySide2.QtWidgets import (
 )
 
 from crimpy.models import TwitterModel
-from crimpy.views import MainObject
+from crimpy.views import RootContext, qml_file
 
+class MainApplication(QGuiApplication):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.__setup()
+        self.__register_event_listeners()
 
-class MyWidget(QWidget):
-    def __init__(self):
-        QWidget.__init__(self)
+        if not self.__engine.rootObjects():
+            sys.exit(-1)
 
-        self.text = QLabel("Qt for Python!")
-        self.text.setAlignment(Qt.AlignCenter)
+    @Slot()
+    def language_changed(self, language):
+        print('Language changed to {}'.format(language))
+        if language == "de":
+            translation_file_path = os.path.join(
+                self.translation_directory,
+                "crimpy_de.qm"
+            )
+            print("Installing {}".format(translation_file_path))
+            self.__de_translator.load(translation_file_path)
+            self.installTranslator(self.__de_translator)
+        else:
+            self.removeTranslator(self.__de_translator)
+        self.__engine.retranslate()
 
-        self.layout = QVBoxLayout()
-        self.layout.addWidget(self.text)
-        self.setLayout(self.layout)
+    def __setup(self):
+        self.__current_language = QLocale.system().name()
+        self.__de_translator = QTranslator()
 
-class Form(QDialog):
-    def __init__(self, parent=None):
-        super().__init__(parent)
-        self.setWindowTitle("My Form")
-        self.edit = QLineEdit("Write my name here...")
-        self.button = QPushButton("Show greetings")
-        self.button.clicked.connect(self.greetings)
+        self.translation_directory = os.path.abspath(
+            os.path.join(os.path.dirname(__file__), "crimpy", "languages")
+        )
 
-        layout = QVBoxLayout()
-        layout.addWidget(self.edit)
-        layout.addWidget(self.button)
-        self.setLayout(layout)
+        self.__engine = QQmlApplicationEngine()
+        self.__root_context = RootContext()
+        self.__engine.rootContext().setContextProperty("main", self.__root_context)
+        qmlRegisterType(TwitterModel, 'Twitter', major, minor, 'TwitterModel')
+        self.__engine.load(QUrl.fromLocalFile(qml_file))
 
-    def greetings(self):
-        print("Hello {}".format(self.edit.text()))
+    def __register_event_listeners(self):
+        self.__root_context.broadcast_language_changed.connect(self.language_changed)
 
 if __name__ == "__main__":
     major = 1
     minor = 0
-    app = QGuiApplication(sys.argv)
-    engine = QQmlApplicationEngine()
-    main_object = MainObject()
-    engine.rootContext().setContextProperty("main", main_object)
-    qmlRegisterType(TwitterModel, 'Twitter', major, minor, 'TwitterModel')
-    engine.load(QUrl.fromLocalFile(MainObject.qml_file))
-    # view = QQuickView()
-    # view.setResizeMode(QQuickView.SizeRootObjectToView)
-
-    # if view.status() == QQuickView.Error:
-    #     sys.exit(-1)
-    # view.show()
-
-    # button = QPushButton("Click me")
-    # button.clicked.connect(log)
-    # button.show()
-
-    # form = Form()
-    # form.show()
-    
-    # view = QQuickView()
-    # url = QUrl("view.qml")
-    # view.setSource(url)
-    # view.show()
-
-    # widget = MyWidget()
-    # widget.resize(800, 600)
-    # widget.show()
-
+    app = MainApplication(sys.argv)
     sys.exit(app.exec_())

@@ -8,7 +8,7 @@ setup(
     author_email="andre.jaenisch@posteo.de",
     description="Python-based CRM system",
     packages=["crimpy", ],
-    install_requires=["PySide2", "shiboken2"],
+    install_requires=["pony", "PySide2", "shiboken2"],
     url="https://github.com/Ryuno-Ki/crimpy",
     license="GPL-3+",
     data_files=[("", ["LICENSE.txt", ])],

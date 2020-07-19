@@ -14,7 +14,8 @@ from PySide2.QtWidgets import (
     QWidget
 )
 
-from crimpy.models import TwitterModel
+from crimpy.connector import TwitterConnector
+from crimpy.repositories import start_database
 from crimpy.views import RootContext, qml_file
 
 class MainApplication(QGuiApplication):
@@ -50,13 +51,14 @@ class MainApplication(QGuiApplication):
         self.__engine = QQmlApplicationEngine()
         self.__root_context = RootContext()
         self.__engine.rootContext().setContextProperty("main", self.__root_context)
-        qmlRegisterType(TwitterModel, 'Twitter', major, minor, 'TwitterModel')
+        qmlRegisterType(TwitterConnector, 'Twitter', major, minor, 'TwitterModel')
         self.__engine.load(QUrl.fromLocalFile(qml_file))
 
     def __register_event_listeners(self):
         self.__root_context.broadcast_language_changed.connect(self.language_changed)
 
 if __name__ == "__main__":
+    start_database()
     major = 1
     minor = 0
     app = MainApplication(sys.argv)

@@ -5,7 +5,6 @@ import QtQuick.Controls 2.12
 import QtQuick.Window 2.12
 
 import "controls" as Crimpy
-import Twitter 1.0
 
 ApplicationWindow {
     title: "Crimpy - Python CRM"
@@ -42,19 +41,5 @@ ApplicationWindow {
 		id: settings
 	}
 
-    TwitterModel {
-        id: twitterModel
-    }
-
-    Column {
-        anchors.fill: parent
-        Repeater {
-            model: twitterModel
-            delegate: Row {
-                Text {
-                    text: display.tweet.full_text
-                }
-            }
-        }
-	}
+    Crimpy.Twitter {}
 }

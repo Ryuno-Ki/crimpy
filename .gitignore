@@ -257,3 +257,4 @@ tags
 resources/
 !resources/.gitkeep
 .vscode/
+*.sqlite

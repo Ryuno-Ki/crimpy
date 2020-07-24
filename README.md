@@ -8,6 +8,25 @@ Your crispy CRM in Python
 2. Clone repo
 3. Install dependencies
 
+## Testing
+
+To run the tests with coverage reports, execute this:
+
+```sh
+pytest --cov=crimpy
+coverage html  # Run in case you want to look at it
+```
+
+Then, check [htmlcov/](./htmlcov/index.html) for a report.
+
+## Type checks
+
+Run the following command to check types:
+
+```sh
+mypy crimpy
+```
+
 ## Translation
 
 In order to translate files, they need to be defined in `crimpy.pro` within

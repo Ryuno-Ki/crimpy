@@ -1,9 +1,15 @@
+"""
+Turn Twitter Model instances into a structure for QML.
+"""
 from PySide2.QtCore import QAbstractTableModel, Qt
 
 from crimpy.managers import TwitterManager
 
 
 class TwitterConnector(QAbstractTableModel):
+    """
+    Connects TwitterManager to QML via QAbstractTableModel
+    """
     def __init__(self):
         super().__init__()
         self.__get_tweets()

@@ -8,6 +8,20 @@ Your crispy CRM in Python
 2. Clone repo
 3. Install dependencies
 
+## Software documentation
+
+This project is documented in Sphinx.
+To build a local version of the documentation, run this command:
+
+```sh
+pandoc README.md -o README.rst
+cd docs
+make html
+```
+
+Then open [`docs/_build/html/`](./docs/_build/html/index.html)
+in your webbrowser.
+
 ## Testing
 
 To run the tests with coverage reports, execute this:
@@ -17,7 +31,7 @@ pytest --cov=crimpy
 coverage html  # Run in case you want to look at it
 ```
 
-Then, check [htmlcov/](./htmlcov/index.html) for a report.
+Then, check [`htmlcov/`](./htmlcov/index.html) for a report.
 
 ## Type checks
 

@@ -1,11 +1,22 @@
 from datetime import datetime
 import json
 import os
+import zipfile
 
 from pony import orm
 
 from crimpy.models import TwitterModel
 
+takeout_path = os.path.abspath(
+    os.path.join(
+        os.path.abspath(__file__),
+        "..",
+        "..",
+        "..",
+        "resources",
+        "twitter.zip"
+    )
+)
 
 class TwitterRepository(object):
     def __init__(self):
@@ -26,19 +37,24 @@ class TwitterRepository(object):
         if len(tweets) > 0:
             return
 
-        takeout_path = os.path.abspath(
-            os.path.join(
-                os.path.abspath(__file__),
-                "..",
-                "..",
-                "..",
-                "resources",
-                "tweet.json"
-            )
-        )
-        with open(takeout_path, "r") as fh:
-            content = fh.read()
+        with zipfile.ZipFile(takeout_path) as zip:
+            files = zip.namelist()
+            files = [file for file in files if file.startswith("data/")]
+            files = [file for file in files if file.endswith(".js")]
+
+            for file in files:
+                # TODO: Deal with other files later on
+                if file != "data/tweet.js":
+                    continue
+
+                with zip.open(file, "r", force_zip64=True) as fh:
+                    content = fh.read().decode("utf-8")
+                    # TODO: Handle other files instetrad of break
+                    break
+
         # Loaded upfront! Can really slow down intial load and responsiveness if loaded in full
+        offset = len("window.YTD.tweet.part0 = ")
+        content = content[offset:]
         tweets_from_json = json.loads(content)
 
         new_tweets = []

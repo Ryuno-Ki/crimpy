@@ -4,9 +4,16 @@ Your crispy CRM in Python
 
 ## Installation
 
-1. Create virtualenv
-2. Clone repo
-3. Install dependencies
+After Step 6, copy your Twitter takeout ZIP archive into the resources
+directory.
+
+1. `virtualenv --python=python3 crimpy`
+2. `cd crimpy`
+3. `source bin/activate`
+4. `git clone https://github.com/Ryuno-Ki/crimpy.git src`
+5. `cd src`
+6. `pip install -r requirements.txt`
+7. `python main.py`
 
 ## Software documentation
 
